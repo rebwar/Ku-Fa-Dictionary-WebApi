@@ -20,6 +20,7 @@ namespace Ku_Fa_Dictionary
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("http://*:8091");
                     webBuilder.UseStartup<Startup>();
                 });
     }

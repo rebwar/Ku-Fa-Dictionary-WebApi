@@ -33,12 +33,16 @@ namespace Ku_Fa_Dictionary
         {
 
             services.AddControllers();
-            services.AddScoped<IDictionaryService,DictionaryService>();
-            services.AddDbContext<DictionaryDbContext>(option=>option.UseSqlServer
+            services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddDbContext<DictionaryDbContext>(option => option.UseSqlServer
             (Configuration.GetConnectionString("DictionaryConn")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ku_Fa_Dictionary", Version = "v1" });
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Open", builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             });
         }
 
@@ -57,7 +61,7 @@ namespace Ku_Fa_Dictionary
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("Open");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
